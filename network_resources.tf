@@ -15,6 +15,7 @@ resource "aws_subnet" "public_subnet_1" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "us-east-2a"
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "public_subnet_1"
@@ -25,6 +26,7 @@ resource "aws_subnet" "public_subnet_2" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.2.0/24"
   availability_zone = "us-east-2b"
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "public_subnet_2"
@@ -105,12 +107,27 @@ resource "aws_lb_target_group" "lb_target_group" {
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
+  health_check {
+    path     = "/"
+    protocol = "HTTP"
+    matcher  = "200"
+    interval = 30
+    timeout  = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
 }
 
 // load balancer target group attachment
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "targetgrp_subnet1" {
   target_group_arn = aws_lb_target_group.lb_target_group.arn
   target_id        = aws_instance.ec2_subnet_1.id
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "targetgrp_subnet2" {
+  target_group_arn = aws_lb_target_group.lb_target_group.arn
+  target_id        = aws_instance.ec2_subnet_2.id
   port             = 80
 }
 
@@ -126,4 +143,12 @@ resource "aws_lb_listener" "load_balancer_listener" {
   }
 }
 
+// subnet for rds 
+# resource "aws_db_subnet_group" "rds_subnet" {
+#   name       = "rds_subnet"
+#   subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
 
+#   tags = {
+#     Name = "rds subnet group"
+#   }
+# }
