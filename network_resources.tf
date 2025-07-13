@@ -98,4 +98,32 @@ resource "aws_lb" "application_load_balancer" {
 
 }
 
-// 
+// load balancer target group 
+resource "aws_lb_target_group" "lb_target_group" {
+  name        = "loadbalancer_targetgroup"
+  target_type = "instance"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
+}
+
+// load balancer target group attachment
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.lb_target_group.arn
+  target_id        = aws_instance.ec2_subnet_1.id
+  port             = 80
+}
+
+// load balancer listener
+resource "aws_lb_listener" "load_balancer_listener" {
+  load_balancer_arn = aws_lb.application_load_balancer.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_target_group.arn
+  }
+}
+
+
