@@ -100,7 +100,7 @@ resource "aws_lb" "application_load_balancer" {
 
 // load balancer target group 
 resource "aws_lb_target_group" "lb_target_group" {
-  name        = "loadbalancer_targetgroup"
+  name        = "loadbalancer-targetgroup"
   target_type = "instance"
   port        = 80
   protocol    = "HTTP"
