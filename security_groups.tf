@@ -80,6 +80,7 @@ resource "aws_security_group" "security_group_ssh_access" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+// understanding rds 
 
 // security group for rds 
 # resource "aws_security_group" "db_securitygroup" {
