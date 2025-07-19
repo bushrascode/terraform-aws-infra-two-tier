@@ -12,9 +12,9 @@ resource "aws_vpc" "main" {
 // subnets 
 
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
-  availability_zone = "us-east-2a"
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "us-east-2a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -23,9 +23,9 @@ resource "aws_subnet" "public_subnet_1" {
 }
 
 resource "aws_subnet" "public_subnet_2" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.2.0/24"
-  availability_zone = "us-east-2b"
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "us-east-2b"
   map_public_ip_on_launch = true
 
   tags = {
@@ -34,8 +34,8 @@ resource "aws_subnet" "public_subnet_2" {
 }
 
 resource "aws_subnet" "private_subnet_1" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.3.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.3.0/24"
   availability_zone = "us-east-2a"
 
   tags = {
@@ -44,8 +44,8 @@ resource "aws_subnet" "private_subnet_1" {
 }
 
 resource "aws_subnet" "private_subnet_2" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.4.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.4.0/24"
   availability_zone = "us-east-2b"
 
   tags = {
@@ -108,11 +108,11 @@ resource "aws_lb_target_group" "lb_target_group" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   health_check {
-    path     = "/"
-    protocol = "HTTP"
-    matcher  = "200"
-    interval = 30
-    timeout  = 5
+    path                = "/"
+    protocol            = "HTTP"
+    matcher             = "200"
+    interval            = 30
+    timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 2
   }
