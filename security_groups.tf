@@ -81,32 +81,23 @@ resource "aws_security_group" "security_group_ssh_access" {
   }
 }
 
-// security group for rds 
-# resource "aws_security_group" "db_securitygroup" {
-#   name        = "db_sg"
-#   description = "allow traffic from internet"
-#   vpc_id      = aws_vpc.main.id
+// security group for rds - only allow access 
+resource "aws_security_group" "db_securitygroup" {
+  name        = "db_sg"
+  description = "allow traffic from internet"
+  vpc_id      = aws_vpc.main.id
 
-#   ingress {
-#     from_port       = 3306
-#     to_port         = 3306
-#     protocol        = "tcp"
-#     security_groups = [aws_security_group.two-tier-ec2-sg.id]
-#     cidr_blocks     = ["0.0.0.0/0"]
-#   }
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.security_group_web_access.id, aws_security_group.security_group_ssh_access.id]
+  }
 
-#   ingress {
-#     from_port       = 22
-#     to_port         = 22
-#     protocol        = "tcp"
-#     security_groups = [aws_security_group.two-tier-ec2-sg.id]
-#     cidr_blocks     = ["10.0.0.0/16"]
-#   }
-
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-# }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

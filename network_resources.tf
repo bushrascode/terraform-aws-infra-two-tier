@@ -144,11 +144,11 @@ resource "aws_lb_listener" "load_balancer_listener" {
 }
 
 // subnet for rds 
-# resource "aws_db_subnet_group" "rds_subnet" {
-#   name       = "rds_subnet"
-#   subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
+resource "aws_db_subnet_group" "rds_subnet" {
+  name       = "rds_subnet"
+  subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
 
-#   tags = {
-#     Name = "rds subnet group"
-#   }
-# }
+  tags = {
+    Name = "rds subnet group"
+  }
+}
