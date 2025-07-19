@@ -84,7 +84,7 @@ resource "aws_security_group" "security_group_ssh_access" {
 // security group for rds - only allow access 
 resource "aws_security_group" "db_securitygroup" {
   name        = "db_sg"
-  description = "allow traffic from internet"
+  description = "allow ec2 access to my rds instance"
   vpc_id      = aws_vpc.main.id
 
   ingress {
