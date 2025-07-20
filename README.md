@@ -9,3 +9,5 @@ This project demonstrates how to deploy a two-tier architecture on AWS using **T
 - An **Application Load Balancer** distributing traffic to the EC2s
 - A private **RDS MySQL database** in private subnets
 - Configured **Security Groups**, **Internet Gateway**, **Route Tables**, and more
+
+Read more about here: https://medium.com/@bushrafatima23/how-i-deployed-a-two-tier-aws-architecture-with-terraform-a7ca8d9da9b7
